@@ -12,7 +12,7 @@
         </div>
 
         <div class="bg-white rounded-lg shadow-md overflow-hidden max-w-3xl mx-auto">
-            <img src="{{ route('images.show', ['filename' => basename($article->image)]) }}" alt="{{ $article->title }}" class="h-48 w-full object-cover">
+        <img src="{{ route('images.show', ['filename' => basename($article->image)]) }}" alt="{{ $article->title }}" class="h-48 w-full object-cover">
 
             <div class="p-4">
                 <p class="mt-4 text-gray-600">

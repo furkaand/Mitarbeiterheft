@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AllInstructionsController;
 use App\Http\Controllers\YourInstructionController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ Route::post('/register', [AuthController::class, 'create'])->name('create');
 Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/images/{filename}', [DashboardController::class, 'images'])->middleware('auth')->name('images.show');
+    Route::get('/images/{filename}', [ArticleController::class, 'showImage'])->name('images.show');
 
     Route::resource('articles', ArticleController::class);
     Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
@@ -31,4 +32,15 @@ Route::middleware(['auth', 'auth.session'])->group(function () {
     Route::get('/your-instructions', [YourInstructionController::class, 'index'])->name('your_instructions.index');
     Route::get('/your-instructions/{id}', [YourInstructionController::class, 'show'])->name('your_instructions.show');
     Route::put('/your-instructions/{id}', [YourInstructionController::class, 'update'])->name('your_instructions.update');
+
+    // Ansicht für Mitarbeiter
+    Route::get('/schedule', [ScheduleController::class, 'index'])->name('schedule.index');
+
+    // Ansicht für Abteilungsleiter
+    Route::get('/schedule/manage', [ScheduleController::class, 'manage'])->name('schedule.manage');
+    Route::get('/schedule/create', [ScheduleController::class, 'create'])->name('schedule.create');
+    Route::post('/schedule', [ScheduleController::class, 'store'])->name('schedule.store');
+
+
+
 });

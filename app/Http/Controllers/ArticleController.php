@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 class ArticleController extends Controller
 {
@@ -35,8 +37,6 @@ class ArticleController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'content' => 'required|string',
         ]);
-
-        
 
         $article = new Article();
         $article->title = $request->title;
@@ -85,5 +85,25 @@ class ArticleController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Display the specified image.
+     */
+    public function showImage($filename)
+    {
+        $path = storage_path('app/public/images/' . $filename);
+
+        if (!File::exists($path)) {
+            abort(404);
+        }
+
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
     }
 }
