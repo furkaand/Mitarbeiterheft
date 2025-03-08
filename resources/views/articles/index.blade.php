@@ -4,6 +4,12 @@
 
 @section('content')
     <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-end mb-4">
+            <button type="button" onclick="window.location.href='{{ route('articles.create') }}'" class="bg-blue-500 text-white px-4 py-2 rounded">
+                Neuer Artikel
+            </button>
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($articles as $article)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden">
